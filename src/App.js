@@ -5,6 +5,12 @@ import axios from "axios";
 const Title = styled.h1`
   margin: 1rem 2rem;
 `;
+const LangOptionContainer = styled.div`
+  margin: 1rem 2rem;
+`;
+const LangLabel = styled.label``;
+const SelectLanguage = styled.select``;
+const LangOption = styled.option``;
 const Conatiner = styled.div`
   display: flex;
 `;
@@ -30,12 +36,13 @@ const SubmitButton = styled.button`
 `;
 function App() {
   const [code, setCode] = useState("");
+  const [language, setLanguage] = useState("cpp");
   const [output, setOutput] = useState("");
 
   const handleSubmit = async () => {
     const payload = {
-      language: "cpp",
-      code: code,
+      language,
+      code,
     };
     try {
       const result = await axios.post("http://localhost:3030/run", payload);
@@ -47,6 +54,21 @@ function App() {
   return (
     <>
       <Title>Code Playground</Title>
+      <LangOptionContainer>
+        <LangLabel>Language : </LangLabel>
+        <SelectLanguage
+          value={language}
+          onChange={(e) => {
+            setLanguage(e.target.value);
+            console.log(e.target.value);
+          }}
+        >
+          <LangOption value="cpp">cpp</LangOption>
+          <LangOption value="py">python</LangOption>
+          <LangOption value="js">javaScript</LangOption>
+        </SelectLanguage>
+      </LangOptionContainer>
+
       <Conatiner>
         <CodeArea
           rows="22"
