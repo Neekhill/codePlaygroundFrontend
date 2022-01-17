@@ -15,10 +15,10 @@ const Conatiner = styled.div`
   display: flex;
 `;
 const CodeArea = styled.textarea`
+  flex: 1;
   margin-left: 2rem;
   font-size: 20px;
-  flex: 2;
-  min-width: 700px;
+
   padding: 1rem;
 `;
 const OutputArea = styled.div`
@@ -28,10 +28,16 @@ const OutputArea = styled.div`
   border: 10px solid #cbcbcb;
   background-color: black;
   color: #fff;
+  max-width: 400px;
+  word-wrap: wrap wr;
 `;
 const OutputDetail = styled.p`
   margin-bottom: 1rem;
-  font-size: 1.4rem;
+  padding: 0.4rem;
+  font-size: 1.2rem;
+  overflow-wrap: break-word;
+  background-color: ${(props) =>
+    props.type === "id" ? "orange" : props.type === "status" ? "purple" : ""};
 `;
 
 const SubmitButton = styled.button`
@@ -83,7 +89,7 @@ function App() {
           setOutput(error);
           clearInterval(intervalId);
         }
-      }, 5000);
+      }, 250);
     } catch ({ response }) {
       if (response) {
         setOutput(response.data.err);
@@ -117,8 +123,8 @@ function App() {
           onChange={(e) => setCode(e.target.value)}
         ></CodeArea>
         <OutputArea>
-          <OutputDetail>Job ID: {jobId}</OutputDetail>
-          <OutputDetail>Status: {status}</OutputDetail>
+          <OutputDetail type="id">Job ID: {jobId}</OutputDetail>
+          <OutputDetail type="status">Status: {status}</OutputDetail>
           <OutputDetail>Output: {output}</OutputDetail>
         </OutputArea>
         ˀ
