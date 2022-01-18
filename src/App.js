@@ -49,6 +49,8 @@ function App() {
   const [output, setOutput] = useState("");
   const [jobId, setJobId] = useState("");
   const [status, setStatus] = useState("");
+  const [theme, setTheme] = useState("vs-light");
+  const [font, setFont] = useState(20);
 
   const handleEditorChange = (value, event) => {
     setCode(value);
@@ -134,6 +136,22 @@ function App() {
           </Select>
         </SelectOptionContainer>
 
+        <SelectOptionContainer>
+          <SelectLabel>Font : </SelectLabel>
+          <Select
+            value={font}
+            onChange={(e) => {
+              setFont(e.target.value);
+            }}
+          >
+            <SelectOption value={12}>12</SelectOption>
+            <SelectOption value={14}>14</SelectOption>
+            <SelectOption value={16}>16</SelectOption>
+            <SelectOption value={18}>18</SelectOption>
+            <SelectOption value={20}>20</SelectOption>
+            <SelectOption value={22}>22</SelectOption>
+          </Select>
+        </SelectOptionContainer>
         <SubmitButton onClick={handleSubmit}>Run</SubmitButton>
       </SettingOptions>
 
@@ -147,6 +165,7 @@ function App() {
           onChange={handleEditorChange}
           options={{
             theme: theme,
+            fontSize: font,
           }}
         />
         <OutputArea>
