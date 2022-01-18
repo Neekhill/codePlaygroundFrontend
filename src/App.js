@@ -121,6 +121,19 @@ function App() {
           </Select>
         </SelectOptionContainer>
 
+        <SelectOptionContainer>
+          <SelectLabel>Theme : </SelectLabel>
+          <Select
+            value={theme}
+            onChange={(e) => {
+              setTheme(e.target.value);
+            }}
+          >
+            <SelectOption value="vs-light">light</SelectOption>
+            <SelectOption value="vs-dark">dark</SelectOption>
+          </Select>
+        </SelectOptionContainer>
+
         <SubmitButton onClick={handleSubmit}>Run</SubmitButton>
       </SettingOptions>
 
@@ -132,6 +145,9 @@ function App() {
           language={language}
           defaultValue="/* write your code here */"
           onChange={handleEditorChange}
+          options={{
+            theme: theme,
+          }}
         />
         <OutputArea>
           <OutputDetail type="id">Job ID: {jobId}</OutputDetail>
