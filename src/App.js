@@ -1,43 +1,38 @@
 import styled from "styled-components";
 import { useState } from "react";
 import axios from "axios";
+import Navbar from "./components/Navbar";
 
-const Title = styled.h1`
+const SettingOptions = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const SelectOptionContainer = styled.div`
   margin: 1rem 2rem;
 `;
-const LangOptionContainer = styled.div`
-  margin: 1rem 2rem;
-`;
-const LangLabel = styled.label``;
-const SelectLanguage = styled.select``;
-const LangOption = styled.option``;
+const SelectLabel = styled.label``;
+const Select = styled.select``;
+const SelectOption = styled.option``;
 const Conatiner = styled.div`
   display: flex;
-`;
-const CodeArea = styled.textarea`
-  flex: 1;
   margin-left: 2rem;
-  font-size: 20px;
-
-  padding: 1rem;
 `;
+
 const OutputArea = styled.div`
   flex: 1;
   margin: 0 20px;
   padding: 1rem;
-  border: 10px solid #cbcbcb;
+  //border: 10px solid #cbcbcb;
   background-color: black;
   color: #fff;
-  max-width: 400px;
+  width: 25vw;
+  height: 70vh;
   word-wrap: wrap wr;
 `;
 const OutputDetail = styled.p`
   margin-bottom: 1rem;
-  padding: 0.4rem;
   font-size: 1.2rem;
   overflow-wrap: break-word;
-  background-color: ${(props) =>
-    props.type === "id" ? "orange" : props.type === "status" ? "purple" : ""};
 `;
 
 const SubmitButton = styled.button`
@@ -49,12 +44,18 @@ const SubmitButton = styled.button`
 `;
 function App() {
   const [code, setCode] = useState("");
-  const [language, setLanguage] = useState("cpp");
+  let [language, setLanguage] = useState("javascript");
   const [output, setOutput] = useState("");
   const [jobId, setJobId] = useState("");
   const [status, setStatus] = useState("");
 
   const handleSubmit = async () => {
+    if (language === "python") {
+      language = "py";
+    }
+    if (language === "javascript") {
+      language = "js";
+    }
     const payload = {
       language,
       code,
@@ -89,7 +90,7 @@ function App() {
           setOutput(error);
           clearInterval(intervalId);
         }
-      }, 250);
+      }, 5000);
     } catch ({ response }) {
       if (response) {
         setOutput(response.data.err);
@@ -100,28 +101,26 @@ function App() {
   };
   return (
     <>
-      <Title>Code Playground</Title>
-      <LangOptionContainer>
-        <LangLabel>Language : </LangLabel>
-        <SelectLanguage
-          value={language}
-          onChange={(e) => {
-            setLanguage(e.target.value);
-          }}
-        >
-          <LangOption value="cpp">cpp</LangOption>
-          <LangOption value="py">python</LangOption>
-          <LangOption value="js">javaScript</LangOption>
-        </SelectLanguage>
-      </LangOptionContainer>
+      <Navbar />
+      <SettingOptions>
+        <SelectOptionContainer>
+          <SelectLabel>Language : </SelectLabel>
+          <Select
+            value={language}
+            onChange={(e) => {
+              setLanguage(e.target.value);
+            }}
+          >
+            <SelectOption value="javascript">javaScript</SelectOption>
+            <SelectOption value="python">python</SelectOption>
+            <SelectOption value="cpp">cpp</SelectOption>
+          </Select>
+        </SelectOptionContainer>
+
+        <SubmitButton onClick={handleSubmit}>Run</SubmitButton>
+      </SettingOptions>
 
       <Conatiner>
-        <CodeArea
-          rows="22"
-          cols="100"
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-        ></CodeArea>
         <OutputArea>
           <OutputDetail type="id">Job ID: {jobId}</OutputDetail>
           <OutputDetail type="status">Status: {status}</OutputDetail>
@@ -129,7 +128,6 @@ function App() {
         </OutputArea>
         ˀ
       </Conatiner>
-      <SubmitButton onClick={handleSubmit}>Run</SubmitButton>
     </>
   );
 }
