@@ -54,6 +54,12 @@ function App() {
     setCode(value);
   };
   const handleSubmit = async () => {
+    if (language === "python") {
+      language = "py";
+    }
+    if (language === "javascript") {
+      language = "js";
+    }
     const payload = {
       language,
       code,
