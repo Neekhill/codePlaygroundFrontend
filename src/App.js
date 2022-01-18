@@ -50,13 +50,10 @@ function App() {
   const [jobId, setJobId] = useState("");
   const [status, setStatus] = useState("");
 
+  const handleEditorChange = (value, event) => {
+    setCode(value);
+  };
   const handleSubmit = async () => {
-    if (language === "python") {
-      language = "py";
-    }
-    if (language === "javascript") {
-      language = "js";
-    }
     const payload = {
       language,
       code,
@@ -123,9 +120,12 @@ function App() {
 
       <Conatiner>
         <Editor
-          height="90vh"
+          height="70vh"
+          width="60vw"
           defaultLanguage="javascript"
-          defaultValue="// some comment"
+          language={language}
+          defaultValue="/* write your code here */"
+          onChange={handleEditorChange}
         />
         <OutputArea>
           <OutputDetail type="id">Job ID: {jobId}</OutputDetail>
