@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import axios from "axios";
 import Navbar from "./components/Navbar";
+import Editor from "@monaco-editor/react";
 
 const SettingOptions = styled.div`
   display: flex;
@@ -121,6 +122,11 @@ function App() {
       </SettingOptions>
 
       <Conatiner>
+        <Editor
+          height="90vh"
+          defaultLanguage="javascript"
+          defaultValue="// some comment"
+        />
         <OutputArea>
           <OutputDetail type="id">Job ID: {jobId}</OutputDetail>
           <OutputDetail type="status">Status: {status}</OutputDetail>
