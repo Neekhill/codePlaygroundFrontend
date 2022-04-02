@@ -94,7 +94,10 @@ function App() {
       setJobId("");
       setStatus("");
       setOutput("");
-      const { data } = await axios.post("http://localhost:3030/run", payload);
+      const { data } = await axios.post(
+        "https://nikhilcodeplayground.herokuapp.com/run",
+        payload
+      );
       console.log(data);
       setJobId(data.jobId);
       let intervalId;
@@ -102,7 +105,7 @@ function App() {
       // long polling to check the status and get the outout
       intervalId = setInterval(async () => {
         const { data: dataRes } = await axios.get(
-          "http://localhost:3030/status",
+          "https://nikhilcodeplayground.herokuapp.com/status",
           { params: { id: data.jobId } }
         );
         console.log(dataRes);
