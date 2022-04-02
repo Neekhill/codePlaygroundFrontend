@@ -3,20 +3,38 @@ import { useState } from "react";
 import axios from "axios";
 import Navbar from "./components/Navbar";
 import Editor from "@monaco-editor/react";
+import { large, largeMobile } from "./responsive";
 
 const SettingOptions = styled.div`
   display: flex;
   align-items: center;
+  ${largeMobile({ flexWrap: "wrap", paddingLeft: "0rem" })};
 `;
 const SelectOptionContainer = styled.div`
   margin: 1rem 2rem;
+  ${largeMobile({
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    marginRight: "5px",
+  })};
 `;
 const SelectLabel = styled.label``;
-const Select = styled.select``;
+const Select = styled.select`
+  padding: 1px 7px;
+`;
 const SelectOption = styled.option``;
+
 const Conatiner = styled.div`
   display: flex;
   margin-left: 2rem;
+  ${large({ flexDirection: "column", alignItems: "center", margin: "1rem" })}
+`;
+const EditorContainer = styled.div`
+  flex: 2;
+  width: 60vw;
+  border: 1px solid lightgray;
+  ${large({ flex: "1", width: "90vw", height: "50vh" })};
 `;
 
 const OutputArea = styled.div`
@@ -28,11 +46,11 @@ const OutputArea = styled.div`
   color: #fff;
   width: 25vw;
   height: 70vh;
-  word-wrap: wrap wr;
+  word-wrap: wrap;
+  ${large({ width: "90%", margin: "20px 0px" })}
 `;
 const OutputDetail = styled.p`
   margin-bottom: 1rem;
-  font-size: 1.2rem;
   overflow-wrap: break-word;
 `;
 
@@ -40,8 +58,14 @@ const SubmitButton = styled.button`
   margin: 1rem 2rem;
   padding: 0.5rem 2rem;
   font-size: 16px;
+  font-weight: 500;
   border: none;
   cursor: pointer;
+  &:hover {
+    background-color: teal;
+    color: white;
+    transition: all 0.4s ease;
+  }
 `;
 function App() {
   const [code, setCode] = useState("");
@@ -50,7 +74,7 @@ function App() {
   const [jobId, setJobId] = useState("");
   const [status, setStatus] = useState("");
   const [theme, setTheme] = useState("vs-light");
-  const [font, setFont] = useState(20);
+  const [font, setFont] = useState(14);
 
   const handleEditorChange = (value, event) => {
     setCode(value);
@@ -96,7 +120,7 @@ function App() {
           setOutput(error);
           clearInterval(intervalId);
         }
-      }, 5000);
+      }, 1000);
     } catch ({ response }) {
       if (response) {
         setOutput(response.data.err);
@@ -156,22 +180,25 @@ function App() {
       </SettingOptions>
 
       <Conatiner>
-        <Editor
-          height="70vh"
-          width="60vw"
-          defaultLanguage="javascript"
-          language={language}
-          defaultValue="/* write your code here */"
-          onChange={handleEditorChange}
-          options={{
-            theme: theme,
-            fontSize: font,
-          }}
-        />
+        <EditorContainer>
+          <Editor
+            height="75vh"
+            border
+            defaultLanguage="javascript"
+            language={language}
+            defaultValue="/* write your code here */"
+            onChange={handleEditorChange}
+            options={{
+              theme: theme,
+              fontSize: font,
+            }}
+          />
+        </EditorContainer>
         <OutputArea>
-          <OutputDetail type="id">Job ID: {jobId}</OutputDetail>
-          <OutputDetail type="status">Status: {status}</OutputDetail>
-          <OutputDetail>Output: {output}</OutputDetail>
+          Output:
+          {jobId && <OutputDetail>Job ID: {jobId}</OutputDetail>}
+          {status && <OutputDetail>Status: {status}</OutputDetail>}
+          {output && <OutputDetail> {output}</OutputDetail>}
         </OutputArea>
         ˀ
       </Conatiner>

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { largeMobile } from "../responsive";
 const Container = styled.div`
   height: 60px;
   color: #fff;
@@ -13,6 +14,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  ${largeMobile({ padding: "1rem" })};
 `;
 const Left = styled.div`
   display: flex;
@@ -22,6 +24,7 @@ const Left = styled.div`
 const Logo = styled.h1`
   font-weight: bold;
   font-size: 26px;
+  ${largeMobile({ fontSize: "20px" })};
 `;
 
 const Navbar = () => {
@@ -29,7 +32,7 @@ const Navbar = () => {
     <Container>
       <Wrapper>
         <Left>
-          <Logo>{`[ CodePlayground ]`}</Logo>
+          <Logo>{`</> CodingPLayground`}</Logo>
         </Left>
       </Wrapper>
     </Container>
