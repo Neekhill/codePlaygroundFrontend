@@ -4,7 +4,7 @@ import axios from "axios";
 import Navbar from "./components/Navbar";
 import Editor from "@monaco-editor/react";
 import { large, largeMobile } from "./responsive";
-import { BASE_URL } from "./constants";
+import BASE_URL from "./constants";
 
 const SettingOptions = styled.div`
   display: flex;
