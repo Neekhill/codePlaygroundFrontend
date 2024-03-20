@@ -4,6 +4,7 @@ import axios from "axios";
 import Navbar from "./components/Navbar";
 import Editor from "@monaco-editor/react";
 import { large, largeMobile } from "./responsive";
+import { BASE_URL } from "./constants";
 
 const SettingOptions = styled.div`
   display: flex;
@@ -94,20 +95,16 @@ function App() {
       setJobId("");
       setStatus("");
       setOutput("");
-      const { data } = await axios.post(
-        "https://nikhilcodeplayground.herokuapp.com/run",
-        payload
-      );
+      const { data } = await axios.post(`${BASE_URL}/run`, payload);
       console.log(data);
       setJobId(data.jobId);
       let intervalId;
 
       // long polling to check the status and get the outout
       intervalId = setInterval(async () => {
-        const { data: dataRes } = await axios.get(
-          "https://nikhilcodeplayground.herokuapp.com/status",
-          { params: { id: data.jobId } }
-        );
+        const { data: dataRes } = await axios.get(`${BASE_URL}/status`, {
+          params: { id: data.jobId },
+        });
         console.log(dataRes);
         const { success, job, error } = dataRes;
 
